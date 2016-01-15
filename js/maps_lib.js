@@ -9,11 +9,11 @@
         this.searchRadius = options.searchRadius || 805; //in meters ~ 1/2 mile
 
         // the encrypted Table ID of your Fusion Table (found under File => About)
-        this.fusionTableId = options.fusionTableId || "1VyMTsrYT-mvCLrjYT71uVRCb3PMwWXbqMJVHzVao",
+        this.fusionTableId = options.fusionTableId || "",
 
         // Found at https://console.developers.google.com/
         // Important! this key is for demonstration purposes. please register your own.
-        this.googleApiKey = options.googleApiKey || "AIzaSyAyzX835fpaRx2WwMNC9iCvD5-xDLojxVQ",
+        this.googleApiKey = options.googleApiKey || "",
         
         // name of the location column in your Fusion Table.
         // NOTE: if your location column name has spaces in it, surround it with single quotes
@@ -99,6 +99,7 @@
         self.fusionTable = self.searchrecords;
         self.searchrecords.setMap(map);
         self.getCount(whereClause);
+        self.getList(whereClause);
     };
 
 
@@ -126,6 +127,7 @@
                     else if (self.searchRadius >= 80500) map.setZoom(8); // 100 miles
                     else if (self.searchRadius >= 40250) map.setZoom(9); // 100 miles
                     else if (self.searchRadius >= 16100) map.setZoom(11); // 10 miles
+                    else if (self.searchRadius >= 11270) map.setZoom(11); // 7 miles
                     else if (self.searchRadius >= 8050) map.setZoom(12); // 5 miles
                     else if (self.searchRadius >= 3220) map.setZoom(13); // 2 miles
                     else if (self.searchRadius >= 1610) map.setZoom(14); // 1 mile
@@ -164,13 +166,8 @@
         
         //-----custom filters-----
         
-        var type_column = "Status";  // -- note use of single & double quotes for two-word column header
-  var tempWhereClause = [];
-  if ( $("#cbType1").is(':checked')) tempWhereClause.push("Prospect");
-  if ( $("#cbType2").is(':checked')) tempWhereClause.push("Agreement");
-  if ( $("#cbType3").is(':checked')) tempWhereClause.push("parkinglot");
-  whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
-        
+
+
         
         //-----end of custom filters-----
 
@@ -307,6 +304,53 @@
         });
         $("#result_box").fadeIn();
     };
+
+
+MapsLib.prototype.getList = function(whereClause) {
+    var self = this;
+    var selectColumns = 'studio, FullAddress, Status, Status2';
+
+    self.query({ 
+      select: selectColumns, 
+      where: whereClause 
+    }, function(response) { 
+      self.displayList(response);
+    });
+  },
+
+  MapsLib.prototype.displayList = function(json) {
+    var self = this;
+
+    var data = json['rows'];
+    var template = '';
+
+    var results = $('#results_list');
+    results.hide().empty(); //hide the existing list and empty it out first
+
+    if (data == null) {
+      //clear results list
+      results.append("<li><span class='lead'>No results found</span></li>");
+    }
+    else {
+      for (var row in data) {
+        template = "\
+          <div class='row-fluid item-list'>\
+            <div class='span12'>\
+              <strong>" + data[row][0] + "</strong>\
+              <br />\
+              " + data[row][1] + "\
+              <br />\
+              " + data[row][2] + "\
+              <br />\
+              " + data[row][3] + "\
+            </div>\
+          </div>";
+        results.append(template);
+      }
+    }
+    results.fadeIn();
+  },
+  
 
     MapsLib.prototype.addCommas = function (nStr) {
         nStr += '';
