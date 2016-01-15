@@ -7,7 +7,7 @@
         this.recordName = options.recordName || "result"; //for showing a count of results
         this.recordNamePlural = options.recordNamePlural || "results";
         this.searchRadius = options.searchRadius || 805; //in meters ~ 1/2 mile
-
+        
         // the encrypted Table ID of your Fusion Table (found under File => About)
         this.fusionTableId = options.fusionTableId || "",
 
@@ -166,7 +166,16 @@
         
         //-----custom filters-----
         
+          var type_column = "'Status'"; // -- note use of single & double quotes for two-word column header
+        var tempWhereClause = [];
 
+    if ( $("#cbType1").is(':checked')) tempWhereClause.push("parkinglot");
+
+    if ( $("#cbType2").is(':checked')) tempWhereClause.push("agreement");
+
+    if ( $("#cbType3").is(':checked')) tempWhereClause.push("prospect");
+
+    self.whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
 
         
         //-----end of custom filters-----
@@ -308,7 +317,7 @@
 
 MapsLib.prototype.getList = function(whereClause) {
     var self = this;
-    var selectColumns = 'Studio, FullAddress, Status, Status2';
+    var selectColumns = 'studio, FullAddress, Status, Status2';
 
     self.query({ 
       select: selectColumns, 
