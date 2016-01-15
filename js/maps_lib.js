@@ -4,9 +4,9 @@
 
         options = options || {};
 
-        this.recordName = options.recordName || "result"; //for showing a count of results
-        this.recordNamePlural = options.recordNamePlural || "results";
-        this.searchRadius = options.searchRadius || 805; //in meters ~ 1/2 mile
+        this.recordName = options.recordName || "Studio"; //for showing a count of results
+        this.recordNamePlural = options.recordNamePlural || "Studios";
+        this.searchRadius = options.searchRadius || 1610; //in meters ~ 1/2 mile
         
         // the encrypted Table ID of your Fusion Table (found under File => About)
         this.fusionTableId = options.fusionTableId || "",
