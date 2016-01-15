@@ -166,14 +166,14 @@
         
         //-----custom filters-----
         
-          var type_column = "'Status'"; // -- note use of single & double quotes for two-word column header
+          var type_column = "Status"; // -- note use of single & double quotes for two-word column header
         var tempWhereClause = [];
 
-    if ( $("#cbType1").is(':checked')) tempWhereClause.push("parkinglot");
+    if ( $("#cbType1").is(':checked')) tempWhereClause.push("prospect");
 
     if ( $("#cbType2").is(':checked')) tempWhereClause.push("agreement");
 
-    if ( $("#cbType3").is(':checked')) tempWhereClause.push("prospect");
+    if ( $("#cbType3").is(':checked')) tempWhereClause.push("parkinglot");
 
     self.whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
 
