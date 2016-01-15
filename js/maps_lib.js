@@ -169,9 +169,9 @@
           var type_column = "Status"; // -- note use of single & double quotes for two-word column header
         var tempWhereClause = [];
 
-    if ( $("#cbType1").is(':checked')) tempWhereClause.push("prospect");
+    if ( $("#cbType1").is(':checked')) tempWhereClause.push("Prospect");
 
-    if ( $("#cbType2").is(':checked')) tempWhereClause.push("agreement");
+    if ( $("#cbType2").is(':checked')) tempWhereClause.push("Agreement");
 
     if ( $("#cbType3").is(':checked')) tempWhereClause.push("parkinglot");
 
@@ -317,7 +317,7 @@
 
 MapsLib.prototype.getList = function(whereClause) {
     var self = this;
-    var selectColumns = 'studio, FullAddress, Status, Status2';
+    var selectColumns = 'studio, FullAddress, Status, Statusmarker3';
 
     self.query({ 
       select: selectColumns, 
