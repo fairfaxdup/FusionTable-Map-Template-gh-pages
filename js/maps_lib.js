@@ -168,7 +168,7 @@
   var tempWhereClause = [];
   if ( $("#cbType1").is(':checked')) tempWhereClause.push("Prospect");
   if ( $("#cbType2").is(':checked')) tempWhereClause.push("Agreement");
-  if ( $("#cbType3").is(':checked')) tempWhereClause.push("Parkinglot");
+  if ( $("#cbType3").is(':checked')) tempWhereClause.push("parkinglot");
   whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
         
         
